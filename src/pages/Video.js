@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import VideoFooter from './components/footer/VideoFooter'
 import "./video.css"
 
 function Video() {
@@ -25,10 +26,10 @@ function Video() {
         ref={videoRef}
         onClick={handdleStart}
         loop
-        src="https://player.vimeo.com/external/482693514.sd.mp4?s=9329f666cb73e89157baeb5f9c75a6a32667f4aa&profile_id=165&oauth2_token_id=57447761"
+        src="https://poqlymuephttfsljdabn.supabase.co/storage/v1/object/public/jornadadev/brecker2.mp4?t=2023-05-22T19%3A37%3A45.885Z"
       >
-
       </video>
+        <VideoFooter/>
       </div>
   )
 }
