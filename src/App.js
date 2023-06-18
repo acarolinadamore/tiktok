@@ -1,36 +1,40 @@
-import './App.css';
-import Video from "./pages/Video";
+import React, {useEffect,useState } from 'react'
+import './App.css'
+import Video from "./pages/Video"
+import db from "./config/firebase"
+import { collection, getDocs } from 'firebase/firestore/lite'
 
 function App() {
+
+const [video, setVideos] = useState([])
+
+async function getVideos() {
+  const videosCollection = collection(db, "videos");
+  const videosSnapshot = await getDocs(videosCollection)
+  const videosList = videosSnapshot.docs.map(doc => doc.data())
+  setVideos(videosList) 
+}
+  useEffect(()=>{
+    getVideos();
+  },[])
+//o que é visual depois do return
   return (
     <div className="App">
       <div className="app-videos">
-        
-        <Video
-        likes={111}
-        messages={222}
-        shares={333}
-        name="Ana Carolina"
-        description="Gato goleiro"
-        music="musica épica"
-        url="https://poqlymuephttfsljdabn.supabase.co/storage/v1/object/public/jornadadev/brecker2.mp4?t=2023-05-22T19%3A37%3A45.885Z"
+       {video.map((item)=>{
+        return(
+          <Video
+        likes={item.likes}
+        messages={item.messages}
+        shares={item.share}
+        name={item.name}
+        description={item.description}
+        music={item.music}
+        url={item.url}
         />
-        <Video
-        likes={444}
-        messages={555}
-        shares={777}
-        name="Ana Carolina"
-        description="Gato goleiro"
-        music="musica épica"
-        />
-        <Video
-        likes={888}
-        messages={1010}
-        shares={1111}
-        name="Ana Carolina"
-        description="Gato goleiro"
-        music="musica épica"
-        />
+        )
+       })}
+       
         
       </div>
     </div>
@@ -38,3 +42,4 @@ function App() {
 }
 
 export default App;
+
